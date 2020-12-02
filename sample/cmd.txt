@@ -1,0 +1,11 @@
+curl -H "Content-Type: application/json" -d "{\"data-subject\": \"$(< sample/datasubject.ttl)\", \"data-controller\": \"$(< sample/datasubject.ttl)\"}" -X POST http://localhost:3900/api/usage-policy/match
+
+# fail
+curl -H "Content-Type: application/json" -d "{\"data-subject\": \"$(< sample/up_own.ttl)\", \"data-controller\": \"$(< sample/datasubject.ttl)\"}" -X POST http://localhost:3900/api/usage-policy/match
+
+curl -H "Content-Type: application/json" -d "{\"data-subject\": \"$(< sample/up_own.ttl)\", \"data-controller\": \"$(< sample/datasubject.ttl)\"}" -X POST https://governance.ownyourdata.eu/api/usage-policy/match
+
+# success
+curl -H "Content-Type: application/json" -d "{\"data-subject\": \"$(< sample/datasubject.ttl)\", \"data-controller\": \"$(< sample/up_own.ttl)\"}" -X POST http://localhost:3900/api/usage-policy/match
+
+curl -H "Content-Type: application/json" -d "{\"data-subject\": \"$(< sample/datasubject.ttl)\", \"data-controller\": \"$(< sample/up_own.ttl)\"}" -X POST https://governance.ownyourdata.eu/api/usage-policy/match
