@@ -73,11 +73,36 @@ module Api
                 response = validate(ds, dc)
 
                 if response.code == 200
-                    render plain: "", 
+                    render json: {"message": "policies match", "code": 0}, 
                            status: 200
                 else
-                    render json: {"error": response.to_s}, 
-                           status: response.code
+                    render json: {"error": response.to_s, "code": 1}, 
+                           status: 200
+                end
+            end
+
+            def parse
+                input = params["ttl"].to_s
+                # dirty hack...
+                input = "@prefix : <http://example.org#> .\n" + input
+                if input == ""
+                    render json: {"error": "missing input"},
+                           status: 400
+                    return
+                end
+
+                # parsing service for usage policies
+                usage_parsing_url = "https://semantic.ownyourdata.eu/api/convert/usage-policy"
+                response = HTTParty.post(usage_parsing_url, 
+                    headers: { 'Content-Type' => 'application/json' },
+                    body: {"usage-policy": input}.to_json)
+
+                if response.code. == 200
+                    render json: response.parsed_response, 
+                           status: 200
+                else
+                    render json: {"error": response.parsed_response["error"].to_s, "code": 1}, 
+                           status: 200
                 end
             end
         end

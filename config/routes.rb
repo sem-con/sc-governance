@@ -66,8 +66,9 @@ Rails.application.routes.draw do
 			match 'watermark/account/:account_id/fragment/:fragment_id',
 				to: 'watermarks#compare',                         via: 'post'
 
-			# Usage Policy validation
+			# Usage Policy
 			match 'usage-policy/match', to: 'usage_policies#match', via: 'post'
+			match 'usage-policy/parse', to: 'usage_policies#parse', via: 'post'
 
 		end
 	end

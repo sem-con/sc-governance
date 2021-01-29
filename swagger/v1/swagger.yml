@@ -1,0 +1,157 @@
+openapi: 3.0.0
+info:
+  title: OwnYourData Governance API
+  version: v1
+  description: >-
+     Useful functions for checking norms, principles, and rules when working 
+     with data.
+
+     Further information:
+     - view other [OwnYourData Service API's](https://api-docs.ownyourdata.eu)
+  contact:
+    email: office@ownyourdata.eu
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+
+servers:
+- url: https://governance.ownyourdata.eu/
+  description: Official production system hosted by OwnYourData
+security:
+  - BearerAuth: []
+paths:
+  /api/usage-policy/match:
+    post:
+      summary: check usage policy matching
+      tags:
+        - Usage Policy
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestUsagePolicyMatch"
+      responses:
+        "200":
+          description: Result of usage policy matching
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUsagePolicyMatch"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestBody"
+  /api/usage-policy/parse:
+    post:
+      summary: parse usage policy in TTL format
+      tags:
+        - Usage Policy
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestUsagePolicyParse"
+      responses:
+        "200":
+          description: Result of usage policy parsing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUsagePolicyParse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestBody"
+components:
+  schemas:
+    BadRequestBody:
+      properties:
+        status:
+          type: integer
+          example: 400
+        error:
+          type: string
+          example: missing input
+      required:
+        - status
+        - error
+    RequestUsagePolicyMatch:
+      properties:
+        data-subject:
+          type: string
+        data-controller:
+          type: string
+      required:
+        - data-subject
+        - data-controller
+    ResponseUsagePolicyMatch:
+      properties:
+        message:
+          type: string
+        error:
+          type: string
+        code:
+          type: integer
+          description: 0 for successful match, otherwise usage policies do not match and description in error
+    RequestUsagePolicyParse:
+      properties:
+        ttl:
+          type: string
+      required:
+        - ttl
+    ResponseUsagePolicyParse:
+      properties:
+        data:
+          type: array
+          items:
+            properties:
+              ns:
+                type: string
+              value:
+                type: string
+        recipient:
+          type: array
+          items:
+            properties:
+              ns:
+                type: string
+              value:
+                type: string
+        purpose:
+          type: array
+          items:
+            properties:
+              ns:
+                type: string
+              value:
+                type: string
+        processing:
+          type: array
+          items:
+            properties:
+              ns:
+                type: string
+              value:
+                type: string
+        location:
+          type: array
+          items:
+            properties:
+              ns:
+                type: string
+              value:
+                type: string
+        duration:
+          type: array
+          items:
+            properties:
+              ns:
+                type: string
+              value:
+                type: string
