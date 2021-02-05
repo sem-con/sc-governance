@@ -10,7 +10,7 @@ more infos and documentation: https://ownyourdata.eu/en/semcon
 Semantic Container images: https://hub.docker.com/u/semcon
 
 
-## Improve the DEC112 Semantic Container
+## Improve the Governance Semantic Container
 
 Please report bugs and suggestions for new features using the [GitHub Issue-Tracker](https://github.com/sem-con/sc-governance/issues) and follow the [Contributor Guidelines](https://github.com/twbs/ratchet/blob/master/CONTRIBUTING.md).
 
